@@ -1,0 +1,143 @@
+/*======================================
+  Main structure
+======================================*/
+// body{background: url(../img/bg.jpg) top center;}
+
+
+// header
+header {
+	.grid {
+		@include columns(
+			$quant: repeat(4, 1fr),
+			$gutter: 10px, 
+			$align: center,
+			$template: 'cols-01 cols-02 cols-04 cols-05' 'full full full full'
+		);
+		
+		.item.cols-01 {
+			grid-area: cols-01;
+		}
+		.item.cols-02 {
+			grid-area: cols-02;
+		}
+		.item.cols-04 {
+			grid-area: cols-04;
+		}
+		.item.cols-05 {
+			grid-area: cols-05;
+		}
+		.item.full {
+			grid-area: full;
+		}
+	}
+}
+
+@include breakpoint2($min:xl, $max:'') {}
+@include breakpoint2($min:lg, $max:xl) {}
+@include breakpoint2($min:md, $max:lg) {}
+@include breakpoint2($min:sm, $max:md) {
+	header {
+		.grid {
+			@include columns(
+				$quant: repeat(3, 1fr),
+				$gutter: 20px, 
+				$align: top,
+				$template: 'cols-01 cols-02 cols-04' 'cols-05 full full'
+			);
+		}
+	}
+}
+@include breakpoint2($min:xs, $max:sm) {
+	header {
+		.grid {
+			@include columns(
+				$quant: repeat(2, 1fr),
+				$gutter: 20px, 
+				$align: top,
+				$template: 'cols-01 cols-02' 'cols-04 cols-05' 'full full'
+			);
+		}
+	}
+}
+@include breakpoint2($min:'', $max:xs) {
+	header {
+		.grid {
+			@include columns(
+				$quant: 1fr,
+				$gutter: 30px, 
+				$align: top,
+				$template: 'cols-01' 'cols-02' 'cols-04' 'cols-05' 'full'
+			);
+		}
+	}
+}
+// end header
+
+// main
+main {
+	
+}
+
+@include breakpoint2($min:xl, $max:'') {}
+@include breakpoint2($min:lg, $max:xl) {}
+@include breakpoint2($min:md, $max:lg) {}
+@include breakpoint2($min:sm, $max:md) {}
+@include breakpoint2($min:xs, $max:sm) {}
+@include breakpoint2($min:'', $max:xs) {}
+// end main
+
+// footer
+footer {
+	.grid {
+		@include columns(
+			$quant: repeat(4, 1fr),
+			$gutter: 10px, 
+			$align: center,
+			$template: ''
+		);
+	}
+}
+
+@include breakpoint2($min:xl, $max:'') {}
+@include breakpoint2($min:lg, $max:xl) {}
+@include breakpoint2($min:md, $max:lg) {}
+@include breakpoint2($min:sm, $max:md) {
+	footer {
+		.grid {
+			@include columns(
+				$quant: repeat(3, 1fr),
+				$gutter: 20px, 
+				$align: top,
+				$template: ''
+			);
+		}
+	}
+}
+@include breakpoint2($min:xs, $max:sm) {
+	footer {
+		.grid {
+			@include columns(
+				$quant: repeat(2, 1fr),
+				$gutter: 20px, 
+				$align: top,
+				$template: ''
+			);
+		}
+	}
+}
+@media (max-width : map-get($breakpoints, xs)) {
+	footer {
+		.grid {
+			@include columns(
+				$quant: 1fr,
+				$gutter: 30px, 
+				$align: top,
+				$template: ''
+			);
+		}
+	}
+}
+// end footer
+
+
+
