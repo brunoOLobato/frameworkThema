@@ -6,7 +6,7 @@ var webpack       = require('webpack');
 var webpackConfig = require('./webpack.config.js');
 var bundler       = webpack(webpackConfig);
 
-var uglify 				= require('gulp-uglify');
+var uglify        = require('gulp-uglify');
 
 var isWatching    = false;
 
@@ -80,7 +80,7 @@ gulp.task('sass:release', ['sass'], function() {
 gulp.task('js:release', function () {
    gulp.src(['./assets/js/bundle.js'])
       .pipe(uglify())
-	 		.pipe($.rename({ suffix: '.min' }))
+      .pipe($.rename({ suffix: '.min' }))
       .pipe(gulp.dest('./assets/js/')) // It will create folder client.min.js
 });
 
@@ -114,16 +114,12 @@ gulp.task('scripts', function(cb) {
  */
 gulp.task('serve', function() {
   browserSync.init({
-    open: false,
-    // ghostMode: false,
-    // online: false,
-    notify: false,
-    proxy: 'framework.local.com',
-    files: [
-      './*.{html,php}',
-      './partials/*.php',
-      './assets/img/*.{jpg,png,svg,gif,webp,ico}'
-    ]
+    // open: false,
+    server: {
+      // proxy: 'framework.local.com',
+      baseDir: './'
+    }
+
   });
 });
 
@@ -135,6 +131,9 @@ gulp.task('build', ['sass', 'scripts', 'svg2png'], function() {
   $.util.log($.util.colors.green('Build is finished'));
 });
 
+gulp.task('build:min', function() {
+  gulp.start('sass:release', 'js:release');
+});
 
 /**
  * Watch files
@@ -142,14 +141,16 @@ gulp.task('build', ['sass', 'scripts', 'svg2png'], function() {
 gulp.task('watch', ['serve'], function() {
   isWatching = true;
 
+  /* Watch htmls */
+  gulp.watch('./*.html', { cwd: './' }).on('change', browserSync.reload);
+
   /* Watch styles */
-  gulp.watch(['**/*.scss'], { cwd: './src/sass/' }, ['sass']);
+  gulp.watch(['**/*.scss'], { cwd: './src/sass/' }, ['sass']).on('change', browserSync.reload);
 
   /* Watch SVG */
-  gulp.watch(['*.svg'], { cwd: './src/img/icons/' }, ['svgicons']);
-  gulp.watch(['*.svg'], { cwd: './src/img/svg/' },   ['svg2png']);
+  gulp.watch(['*.svg'], { cwd: './src/img/icons/' }, ['svgicons']).on('change', browserSync.reload);
+  gulp.watch(['*.svg'], { cwd: './src/img/svg/' },   ['svg2png']).on('change', browserSync.reload);
 });
-
 
 /**
  * Default task
